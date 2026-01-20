@@ -1,12 +1,4 @@
-Evet, sebebi net 👍
-GitHub Markdown’da **numaralı liste + code block** birlikteyken **boş satır/indent** yanlışsa liste “bir girip bir çıkıyor” gibi görünür.
 
-Ben şimdi **%100 düzgün render edilen** halini veriyorum.
-Bunu **tamamını silip** README’ye **AYNEN** yapıştır.
-
----
-
-````md
 # Past2Future 🌍
 
 Past2Future is a web-based platform that connects historical insights with future-oriented perspectives through global events and traveler experiences.
