@@ -1,0 +1,114 @@
+﻿@model IEnumerable<Past2Future.Models.Event>
+@{
+    ViewBag.Title = "Home | PAST2FUTURE";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<style>
+    .event-card {
+        background-color: #1a1a1a;
+        border: 1px solid #333;
+        border-radius: 8px;
+        overflow: hidden;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        max-width: 100%;
+    }
+
+        .event-card:hover {
+            transform: scale(1.03);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.5);
+            cursor: pointer;
+        }
+
+    .read-more-btn {
+        background-color: #00BFFF;
+        color: white;
+        font-size: 0.7rem;
+        border: none;
+    }
+
+        .read-more-btn:hover {
+            background-color: #009ACD; 
+            color: white;
+        }
+</style>
+<div class="main-content-wrapper">
+
+    <section class="interactive-map-area">
+
+        <div class="time-buttons">
+            <a asp-controller="Home"
+               asp-action="Future"
+               class="time-btn future-btn">
+                FUTURE
+            </a>
+
+            <a asp-controller="Home"
+               asp-action="Past"
+               class="time-btn past-btn">
+                PAST
+            </a>
+        </div>
+
+
+        <!-- Area where the 3D globe will be rendered -->
+        <div class="map-container" id="map-container">
+            <p>Loading 3D globe...</p>
+        </div>
+
+    </section>
+    <aside class="best-of-sidebar">
+        <h2 style="color: #00BFFF; border-bottom: 2px solid #333; padding-bottom: 10px; margin-bottom: 20px;">WHAT'S HOT</h2>
+
+        <div class="best-of-content">
+            @foreach (var item in Model.OrderByDescending(x => x.Id).Take(3))
+            {
+                <div class="card mb-3 event-card"
+                     style="background-color: #1a1a1a; border: 1px solid #333; border-radius: 8px; overflow: hidden; transition: transform 0.2s;">
+
+                    <img src="@(string.IsNullOrWhiteSpace(item.ImageUrl)
+                                     ? "https://images.unsplash.com/photo-1557683316-973673baf926?w=400&h=300&fit=crop"
+                                     : item.ImageUrl)"
+                     class="card-img-top"
+                     alt="@item.Title"
+                     style="height: 120px; width: 100%; object-fit: cover;"
+                     onerror="this.src='https://images.unsplash.com/photo-1557683316-973673baf926?w=400&h=300&fit=crop';">
+
+
+                    <div class="card-body p-2 text-center">
+
+                        <h6 class="card-title mb-2"
+                            style="color: #00BFFF; font-size: 0.9rem; font-weight: bold; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
+                            @item.Title
+                        </h6>
+
+                        <a asp-controller="Events" asp-action="Details" asp-route-id="@item.Id"
+                           class="btn btn-sm py-1 px-3 read-more-btn"
+                           style="background-color: #00BFFF; color: white; font-size: 0.75rem; border: none;">
+                            Read More
+                        </a>
+                    </div>
+                </div>
+            }
+        </div>
+    </aside>
+
+</div>
+<script>
+
+window.dbEvents = @Html.Raw(Json.Serialize(
+    Model.Select(e => new {
+        id = e.Id,
+        title = e.Title,
+        description = e.Description,
+       // Use CountryRef.Name if available; otherwise fall back to the Country field
+        country = e.CountryRef != null ? e.CountryRef.Name : e.Country,
+        latitude = e.Latitude,
+        longitude = e.Longitude,
+        // IMPORTANT: expose the flag URL as 'flagUrl' for the frontend
+        flagUrl = e.CountryRef != null ? e.CountryRef.FlagImageUrl : "/img/default-flag.png"
+    })
+));
+
+
+</script>
+

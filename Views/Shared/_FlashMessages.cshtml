@@ -1,0 +1,25 @@
+﻿@{
+
+    var items = new (string Key, string BsType)[]
+    {
+        ("Success", "success"),
+        ("Welcome", "success"),
+        ("Info", "info"),
+        ("Warning", "warning"),
+        ("Error", "danger"),
+        ("Err", "danger"),
+        ("LoginErr", "danger"),
+        ("RegisterErr", "danger"),
+    };
+}
+
+@foreach (var it in items)
+{
+    if (TempData[it.Key] is string msg && !string.IsNullOrWhiteSpace(msg))
+    {
+        <div class="alert alert-@it.BsType alert-dismissible fade show flash-alert mb-2" role="alert">
+            @msg
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    }
+}

@@ -1,0 +1,77 @@
+﻿@model Past2Future.Models.Event
+@{
+    var countries = ViewBag.Countries as List<Past2Future.Models.Country> ?? new();
+}
+
+<div class="container py-5">
+    <h2 class="text-light">Add Event</h2>
+    <hr class="bg-light" />
+
+    <div class="row">
+        <div class="col-md-6 text-light">
+            <form asp-action="Create" method="post">
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+                @Html.AntiForgeryToken()
+
+                <div class="mb-3">
+                    <label>Title</label>
+                    <input asp-for="Title" class="form-control" placeholder="Ex: French Revolution" />
+                </div>
+
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <label>Type</label>
+                        <select asp-for="Type" class="form-control">
+                            <option value="Past">Past </option>
+                            <option value="Future">Future </option>
+                        </select>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label">Country</label>
+
+                        <select asp-for="CountryId" class="form-control">
+                            <option value="">-- Select Country --</option>
+                            @foreach (var c in countries)
+                            {
+                                <option value="@c.Id">@c.Name</option>
+                            }
+                        </select>
+
+                        <span asp-validation-for="CountryId" class="text-danger"></span>
+                    </div>
+                    </div>
+
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <label>Latitude</label>
+                        <input asp-for="Latitude" type="number" step="any" class="form-control" placeholder="e.g., 41.00" />
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label>Longitude</label>
+                        <input asp-for="Longitude" type="number" step="any" class="form-control" placeholder="e.g., 28.97" />
+                    </div>
+                </div>
+
+                <div class="mb-3">
+                    <label>Description</label>
+                    <textarea asp-for="Description" class="form-control" rows="3"></textarea>
+                </div>
+                <div class="mb-3">
+                    <label>Image URL</label>
+                    <input asp-for="ImageUrl" class="form-control"
+                           placeholder="Ex: /img/turkey.jpg or https://..." />
+                </div>
+
+
+                <div class="mb-3">
+                    <label>Date</label>
+                    <input asp-for="Date" type="date" class="form-control" />
+                </div>
+
+                <button type="submit" class="btn btn-success">Save and Add to Globe</button>
+                <a asp-action="Index" class="btn btn-secondary">Go Back To List</a>
+            </form>
+        </div>
+    </div>
+</div>

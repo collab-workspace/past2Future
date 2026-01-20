@@ -1,0 +1,30 @@
+
+:root{
+  --accent: #00BFFF;
+}
+body{ background:#0d1117; color:#00BFFF; }
+.accent{ color: var(--accent); }
+.card-elevated{ box-shadow: 0 10px 30px rgba(0,0,0,.35); }
+.avatar-circle{ width:48px; height:48px; border-radius:50%; }
+.feed-card .post-meta{ font-size:.9rem; color:#9aa0a6; }
+.feed-card .tag{ font-size:.75rem; }
+.card-title{ font-weight:600; letter-spacing:.2px; }
+.card-text{ font-size:1.05rem; line-height:1.7; }
+.comment{
+  background:#1b1f23;
+  border:1px solid #2a2f34;
+  border-radius:.75rem;
+  padding:.65rem .85rem;
+}
+.comment .meta{ font-size:.85rem; color:#00BFFF; }
+.like-btn, .dislike-btn, .reply-btn{ cursor:pointer; user-select:none; color: #ffff; }
+.like-btn.active, .dislike-btn.active{ filter:brightness(1.35); }
+.border-secondary{ border-color:#2a2f34 !important; }
+.bg-body-tertiary{ background:#0f141a !important;  }
+.hidden{ display:none !important; }
+.form-control,
+.form-select{
+  color: #343a40 !important; 
+  background-color: #929497 !important; 
+}
+

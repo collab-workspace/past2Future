@@ -1,0 +1,31 @@
+﻿@model Past2Future.Models.Country
+@{
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+    ViewBag.Title = "Create Country";
+}
+
+<h3>Add Country</h3>
+<hr />
+
+<form asp-action="CreateCountry" method="post" class="mt-3">
+    @Html.AntiForgeryToken()
+
+    <div class="mb-3">
+        <label class="form-label">Name</label>
+        <input asp-for="Name" class="form-control" />
+        <span asp-validation-for="Name" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label">Flag Image Url</label>
+        <input asp-for="FlagImageUrl" class="form-control" placeholder="/flags/tr.png veya https://..." />
+    </div>
+
+    <div class="form-check mb-3">
+        <input asp-for="IsActive" class="form-check-input" />
+        <label class="form-check-label">Active</label>
+    </div>
+
+    <button class="btn btn-primary" type="submit">Save</button>
+    <a class="btn btn-secondary" asp-action="Countries">Back</a>
+</form>

@@ -1,0 +1,629 @@
+
+
+/* 0. BASE STYLES AND RESET */
+* {
+    box-sizing: border-box; 
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    
+    background-color: #111111; 
+    color: #EEEEEE; 
+    font-family: 'Arial', sans-serif; 
+    font-weight: 500;
+}
+
+
+a {
+    text-decoration: none;
+    color: #00BFFF; 
+    transition: color 0.2s;
+}
+
+a:hover {
+    color: #EEEEEE; 
+}
+
+
+.card {
+    background-color: #1a1a1a !important;
+    border-color: #333333 !important;
+}
+
+.card-title, .card-text {
+    color: #EEEEEE !important;
+}
+
+
+
+
+/* 2. MAIN CONTENT (MAP AND SIDEBAR) */
+.main-content-wrapper {
+    display: flex; 
+    padding: 20px;
+    gap: 20px;
+    min-height: calc(100vh - 70px); 
+}
+
+.interactive-map-area {
+    flex-grow: 1; 
+    display: flex;
+    flex-direction: column;
+    background-color: #1a1a1a;
+    padding: 15px;
+    border: 1px solid #333333;
+    border-radius: 5px;
+}
+
+
+.map-container {
+    position: relative;
+    overflow: hidden; 
+    width: 100%;
+    height: 100%;
+    min-height: 500px; 
+}
+
+   
+    .map-container canvas {
+        position: absolute;
+        top: 0;
+        left: 0;
+        display: block;
+    }
+
+
+
+/* Past and future buttons  */
+.time-buttons {
+    display: flex;
+    margin-bottom: 15px;
+    gap: 10px;
+}
+
+.time-btn {
+    padding: 8px 20px;
+    border: 2px solid #00BFFF;
+    cursor: pointer;
+    font-weight: bold;
+    transition: all 0.3s;
+    border-radius: 3px;
+    text-transform: uppercase;
+}
+
+.past-btn {
+    background-color: #00BFFF;
+    color: #111111; 
+}
+
+.past-btn:hover {
+    background-color: #009ace;
+    color: #111111;
+}
+
+.future-btn {
+    background-color: #00BFFF; 
+    color: #111111;
+}
+
+.future-btn:hover {
+    background-color: #009ace;
+}
+
+
+/* 4. BEST OF SIDEBAR  */
+.best-of-sidebar {
+    width: 300px; 
+    min-width: 300px;
+    background-color: #1a1a1a;
+    padding: 15px;
+    border: 1px solid #333333;
+    border-radius: 5px;
+}
+
+.best-of-sidebar h2 {
+    font-size: 1.1em;
+    text-transform: uppercase;
+    color: #00BFFF;
+    border-bottom: 1px solid #333333;
+    padding-bottom: 10px;
+    margin-bottom: 15px;
+}
+
+.best-of-item {
+    margin-bottom: 15px;
+    padding-bottom: 15px;
+    border-bottom: 1px dotted #333333;
+}
+
+/* 5. STYLES FOR FORM PAGES */
+
+.form-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 40px 20px;
+    min-height: calc(100vh - 70px);
+}
+
+.signup-section, .feedback-section {
+    width: 100%;
+    max-width: 500px;
+    background-color: #1a1a1a;
+    padding: 30px;
+    border: 1px solid #333;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+}
+
+.signup-section h2, .feedback-section h2 {
+    text-align: center;
+    margin-bottom: 20px;
+    color: #00BFFF;
+}
+
+.form-group label {
+    color: #ccc;
+    font-weight: 700;
+}
+
+
+.form-control, .form-select {
+    background-color: #222222 !important;
+    color: #EEEEEE !important;
+    border: 1px solid #555 !important;
+}
+
+.form-control:focus, .form-select:focus {
+    border-color: #00BFFF !important;
+    box-shadow: 0 0 0 0.25rem rgba(0, 191, 255, 0.25) !important; 
+}
+
+.submit-btn {
+    display: block;
+    width: 100%;
+    padding: 12px;
+    background-color: #00BFFF;
+    color: #111111;
+    border: none;
+    border-radius: 4px;
+    font-size: 1.1em;
+    cursor: pointer;
+    margin-top: 20px;
+    transition: background-color 0.3s;
+}
+
+.submit-btn:hover {
+    background-color: #00FFFF;
+}
+
+/* 6. STYLES FOR ABOUT US PAGE */
+.about-container {
+    padding: 40px 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* 7. FEEDBACK ANIMATION SETUP */
+
+
+#envelope-animation-area {
+    height: 50px;
+    margin-top: 15px;
+    overflow: hidden;
+}
+
+.envelope-icon {
+    font-size: 2em;
+    color: #00BFFF;
+    position: relative;
+    left: 0;
+    transition: transform 1s ease-out, opacity 1s; 
+}
+
+/* 8. RESPONSIVE LAYOUT */
+@media (max-width: 900px) {
+    .main-content-wrapper {
+        flex-direction: column;
+    }
+    .interactive-map-area, .best-of-sidebar {
+        min-width: 100%;
+        margin-right: 0;
+        margin-bottom: 20px;
+    }
+    .best-of-sidebar {
+        width: 100%;
+    }
+}
+/* ======= GLOBE PIN TOOLTIP ======= */
+
+.pin-tooltip {
+  position: fixed;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  background: #ffffff;
+  color: #111827;
+  padding: 14px 20px;
+  border-radius: 20px;
+  box-shadow: 0 6px 24px rgba(0,0,0,0.25);
+  border: 1px solid rgba(15,23,42,0.08);
+  z-index: 10000;
+  min-width: 260px;
+  max-width: 320px;
+  line-height: 1.4;
+  opacity: 0;
+  transform: translateY(8px);
+  pointer-events: none;
+  transition: opacity 0.25s ease, transform 0.25s ease;
+}
+
+
+body.dark-mode .pin-tooltip {
+  background: #0f172a;
+  color: #e5e7eb;
+  border-color: rgba(148,163,184,0.35);
+  box-shadow: 0 10px 30px rgba(15,23,42,0.9);
+}
+
+.pin-tooltip.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+
+.pin-tooltip-left {
+  flex-shrink: 0;
+}
+
+.pin-tooltip-image {
+  width: 72px;
+  height: 72px;
+  border-radius: 50%;
+  object-fit: cover;
+  background: #0f172a;
+}
+
+
+.pin-tooltip-right {
+  position: relative;
+  flex: 1;
+  padding-right: 32px;
+}
+
+.pin-tooltip-title {
+  font-size: 18px;
+  font-weight: 600;
+  margin-bottom: 2px;
+}
+
+.pin-tooltip-subtitle {
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: #6b7280;
+  margin-bottom: 6px;
+}
+
+body.dark-mode .pin-tooltip-subtitle {
+  color: #9ca3af;
+}
+
+.pin-tooltip-summary {
+  font-size: 13px;
+  margin: 0;
+}
+
+
+.pin-tooltip-flag {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 26px;
+  height: 18px;
+  border-radius: 3px;
+  object-fit: cover;
+}
+
+
+/* ================= DARK MODE ================= */
+
+body.dark-mode {
+    background-color: #050816;
+    color: #f5f5f5;
+}
+
+/* Navbar */
+body.dark-mode .navbar {
+    background-color: #0b1020 !important;
+}
+body.dark-mode .nav-link,
+body.dark-mode .navbar-brand {
+    color: #e2e8f0 !important;
+}
+
+/* Form container */
+body.dark-mode .form-container,
+body.dark-mode .signup-section,
+body.dark-mode .login-form,
+body.dark-mode .signup-form {
+    background-color: #0f172a;
+    color: #e2e8f0;
+}
+
+/* Inputs */
+body.dark-mode input,
+body.dark-mode select,
+body.dark-mode textarea {
+    background-color: #1e293b;
+    color: #f8fafc;
+    border-color: #334155;
+}
+
+body.dark-mode input::placeholder {
+    color: #94a3b8;
+}
+
+/* Buttons */
+body.dark-mode .submit-btn {
+    background-color: #0284c7 !important;
+    color: white !important;
+    border-color: #0284c7 !important;
+}
+
+body.dark-mode .submit-btn:hover {
+    background-color: #0369a1 !important;
+}
+
+/* Tabs */
+body.dark-mode .nav-tabs .nav-link {
+    background-color: #1e293b;
+    color: #38bdf8 !important;
+    border-color: #334155;
+}
+/* ==================== LIGHT MODE ==================== */
+body.light-mode {
+    background-color: #ffffff !important;
+    color: #000000 !important;
+}
+
+body.light-mode .navbar {
+    background-color: #f8f9fa !important;
+}
+
+body.light-mode .navbar .nav-link,
+body.light-mode .navbar .navbar-brand {
+    color: #000 !important;
+}
+
+body.light-mode .form-container,
+body.light-mode .signup-section,
+body.light-mode .login-form,
+body.light-mode .signup-form {
+    background-color: #f0f0f0 !important;
+    color: #000 !important;
+}
+
+body.light-mode input,
+body.light-mode select,
+body.light-mode textarea {
+    background-color: #ffffff !important;
+    color: #000 !important;
+    border-color: #ccc !important;
+}
+
+body.light-mode input::placeholder {
+    color: #666 !important;
+}
+
+body.light-mode .submit-btn {
+    background-color: #0066cc !important;
+    color: white !important;
+    border-color: #0066cc !important;
+}
+
+body.light-mode .submit-btn:hover {
+    background-color: #004c99 !important;
+}
+
+body.light-mode .nav-tabs .nav-link {
+    background-color: #e7e7e7 !important;
+    color: #000 !important;
+    border-color: #ccc !important;
+}
+
+
+body.light-mode #theme-toggle {
+    color: black !important;
+    border-color: black !important;
+    background-color: transparent !important;
+}
+
+
+body.light-mode #theme-toggle:hover {
+    background-color: black !important;
+    color: white !important;
+}
+
+
+body.dark-mode #theme-toggle {
+    color: white !important;
+    border-color: white !important;
+}
+/* ================== LOADING SCREEN ================== */
+
+#loading-screen {
+    position: fixed;
+    inset: 0;
+    background: #050816; 
+    color: #f5f5f5;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    z-index: 99999;
+    opacity: 1;
+    transition: opacity 0.5s ease;
+}
+
+/* For Light Mode */
+body.light-mode #loading-screen {
+    background: #ffffff;
+    color: #000000;
+}
+
+/* Loader Animation */
+.loader {
+    width: 55px;
+    height: 55px;
+    border: 6px solid #888;
+    border-top-color: #00bfff;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+    margin-bottom: 15px;
+}
+
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+/* Fade-out class */
+#loading-screen.hide {
+    opacity: 0;
+    pointer-events: none;
+}
+
+.loading-text {
+    font-size: 1rem;
+    letter-spacing: 1px;
+    opacity: 0.85;
+}
+.pin-tooltip {
+    position: fixed;
+    background: #ffffff;
+    color: #111827;
+    padding: 12px 18px;
+    border-radius: 12px;
+    box-shadow: 0 6px 20px rgba(0,0,0,0.25);
+    z-index: 10000;
+    min-width: 220px;
+    max-width: 280px;
+    opacity: 0;
+    transform: translateY(8px);
+    pointer-events: none;
+    transition: opacity 0.2s ease, transform 0.2s ease;
+    box-sizing: border-box;
+    overflow-wrap: anywhere;
+}
+
+.pin-tooltip.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.pin-tooltip-flag {
+    width: 32px;
+    height: 20px;
+    object-fit: cover;
+    border-radius: 3px;
+}
+
+/* --- SIDEBAR LAYOUT --- */
+
+.sidebar-title {
+    color: #00BFFF;
+    border-bottom: 2px solid #333;
+    padding-bottom: 10px;
+    margin-bottom: 20px;
+    font-size: 1.2rem;
+    font-weight: bold;
+    letter-spacing: 1px;
+}
+
+.sidebar-card {
+    display: flex; 
+    align-items: center;
+    background-color: rgba(255, 255, 255, 0.05); 
+    padding: 10px;
+    margin-bottom: 15px;
+    border-radius: 10px;
+    text-decoration: none;
+    transition: transform 0.2s, background-color 0.2s;
+    border: 1px solid transparent;
+}
+
+    .sidebar-card:hover {
+        transform: translateX(5px);
+        background-color: rgba(0, 191, 255, 0.1); 
+        border-color: #00BFFF;
+    }
+
+.sidebar-img-container {
+    flex-shrink: 0;
+    width: 70px;
+    height: 70px;
+    margin-right: 15px;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+    .sidebar-img-container img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover; 
+    }
+
+.sidebar-text {
+    flex-grow: 1;
+    overflow: hidden;
+}
+
+.event-title {
+    color: #fff;
+    font-size: 0.95rem;
+    margin: 0 0 5px 0;
+    font-weight: 600;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis; 
+}
+
+.event-country {
+    color: #00BFFF;
+    font-size: 0.8rem;
+    font-weight: 500;
+}
+
+/* Events + What's Hot */
+.event-card {
+    background-color: #1a1a1a;
+    border: 1px solid #333;
+    border-radius: 8px;
+    overflow: hidden;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    max-width: 100%;
+}
+
+    .event-card:hover {
+        transform: scale(1.03);
+        box-shadow: 0 10px 20px rgba(0,0,0,0.5);
+        cursor: pointer;
+    }
+
+
+.read-more-btn {
+    background-color: #00BFFF;
+    color: white;
+    font-size: 0.75rem;
+    border: none;
+}
+
+    .read-more-btn:hover {
+        background-color: #009ACD;
+        color: white;
+    }

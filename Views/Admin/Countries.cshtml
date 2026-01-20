@@ -1,0 +1,62 @@
+﻿@model List<Past2Future.Models.Country>
+@{
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+    ViewBag.Title = "Countries";
+}
+
+<div class="bg-dark text-light p-4 rounded-4 border border-secondary">
+
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <h3 class="mb-0">Countries</h3>
+        <a class="btn btn-sm btn-primary" asp-controller="Admin" asp-action="CreateCountry">
+            + Add Country
+        </a>
+    </div>
+
+    <div class="table-responsive">
+        <table class="table table-dark table-striped table-hover align-middle mb-0">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Flag</th>
+                    <th>Active</th>
+                    <th class="text-end" style="width:260px;"></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var c in Model)
+                {
+                    <tr>
+                        <td>@c.Name</td>
+                        <td>
+                            <img src="@(string.IsNullOrWhiteSpace(c.FlagImageUrl) ? "/flags/default.png" : c.FlagImageUrl)"
+                                 style="width:28px; height:auto;" />
+                        </td>
+                        <td>@(c.IsActive ? "Yes" : "No")</td>
+                        <td class="text-end">
+                            <a class="btn btn-sm btn-outline-light"
+                               asp-controller="Admin" asp-action="EditCountry" asp-route-id="@c.Id">Edit</a>
+
+                            <form asp-controller="Admin" asp-action="ToggleCountry" asp-route-id="@c.Id"
+                                  method="post" class="d-inline">
+                                @Html.AntiForgeryToken()
+                                <button class="btn btn-sm btn-outline-secondary" type="submit">
+                                    @(c.IsActive ? "Disable" : "Enable")
+                                </button>
+                            </form>
+
+                            <form asp-controller="Admin" asp-action="DeleteCountry" asp-route-id="@c.Id"
+                                  method="post" class="d-inline"
+                                  onsubmit="return confirm('Are you sure you want to delete?');">
+                                @Html.AntiForgeryToken()
+                                <button class="btn btn-sm btn-outline-danger" type="submit">Delete</button>
+                            </form>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+
+</div>
+

@@ -1,0 +1,49 @@
+﻿@model IEnumerable<Past2Future.Models.Comment>
+
+@{
+    ViewBag.Title = "Traveler's Thoughts";
+    Layout = "_TravelerLayout";
+}
+
+<section class="container py-5">
+    <div id="welcome-username" class="fw-bold text-light mb-4 fs-1"></div>
+    <div id="welcome-message" class="fw-bold text-light mb-4 fs-1"></div>
+</section>
+
+<main class="container py-4">
+
+    <!-- Başlık -->
+    <div class="text-center mb-4">
+        <h1 class="display-6 accent">TRAVELER'S THOUGHTS</h1>
+    </div>
+
+
+
+
+    <!-- Filtre ve Arama -->
+    <section class="mb-3">
+          
+                <a asp-action="TravelerForm" asp-controller="Home" class="btn btn-outline-light">
+                    Add a Thought
+                </a>
+
+          
+
+    </section>
+
+    <!-- Feed -->
+    <section id="feed" class="vstack gap-3">
+
+        <div class="row g-3 mt-3">
+            @foreach (var c in Model)
+            {
+                <partial name="TravelerThoughtCard" model="c" />
+            }
+        </div>
+
+
+    </section>
+
+</main>
+
+

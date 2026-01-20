@@ -1,0 +1,113 @@
+﻿@model IEnumerable<Past2Future.Models.Event>
+
+@{
+    ViewBag.Title = "Events | PAST2FUTURE";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<style>
+    .event-card {
+        background-color: #1a1a1a;
+        border: 1px solid #333;
+        border-radius: 8px;
+        overflow: hidden;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        max-width: 100%;
+    }
+
+        .event-card:hover {
+            transform: scale(1.03);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.5);
+            cursor: pointer;
+        }
+
+    .read-more-btn {
+        background-color: #00BFFF;
+        color: white;
+        font-size: 0.7rem;
+        border: none;
+    }
+
+        .read-more-btn:hover {
+            background-color: #009ACD; /* Darken the button on hover */
+            color: white;
+        }
+</style>
+
+<main class="container py-5 text-center">
+    <h1 style="color:#00BFFF;">
+        LIST OF EVENTS
+    </h1>
+
+    <h2 style="text-align: left; margin-top: 2rem;">
+        Past Events
+    </h2>
+    <div id="pastNews" style="display: grid; grid-template-columns: repeat(auto-fill,minmax(220px,1fr)); gap: 12px; margin-bottom: 2rem;">
+
+        @foreach (var item in Model.Where(x => x.Type == "Past"))
+        {
+            <div class="card mb-2 event-card">
+                <img src="@(string.IsNullOrWhiteSpace(item.ImageUrl)
+                                  ? "https://images.unsplash.com/photo-1557683316-973673baf926?w=400&h=300&fit=crop"
+                                  : item.ImageUrl)"
+                 class="card-img-top"
+                 alt="@item.Title"
+                 style="height: 120px; width: 100%; object-fit: cover;"
+                 onerror="this.src='https://images.unsplash.com/photo-1557683316-973673baf926?w=400&h=300&fit=crop';">
+
+
+                <div class="card-body p-2">
+                    <h6 class="card-title mb-1" style="color: #00BFFF; font-size: 0.9rem;">
+                        @item.Title
+                    </h6>
+
+                    <a asp-controller="Events" asp-action="Details" asp-route-id="@item.Id" class="btn btn-primary">
+                        Read More
+                    </a>
+                     
+                </div>
+            </div>
+        }
+
+        @if (!Model.Any(x => x.Type == "Past"))
+        {
+            <p class="text-muted text-start">No past events have been added yet.</p>
+        }
+    </div>
+
+    <h2 style="text-align: left; margin-top: 2rem;">
+        Future Events
+    </h2>
+    <div id="futureNews" style="display: grid; grid-template-columns: repeat(auto-fill,minmax(220px,1fr)); gap: 12px;">
+
+        @foreach (var item in Model.Where(x => x.Type == "Future"))
+        {
+            <div class="card mb-2 event-card">
+                <img src="@(string.IsNullOrWhiteSpace(item.ImageUrl)
+                                  ? "https://images.unsplash.com/photo-1557683316-973673baf926?w=400&h=300&fit=crop"
+                                  : item.ImageUrl)"
+                 class="card-img-top"
+                 alt="@item.Title"
+                 style="height: 120px; width: 100%; object-fit: cover;"
+                 onerror="this.src='https://images.unsplash.com/photo-1557683316-973673baf926?w=400&h=300&fit=crop';">
+
+
+                <div class="card-body p-2">
+                    <h6 class="card-title mb-1" style="color: #00BFFF; font-size: 0.9rem;">
+                        @item.Title
+                    </h6>
+
+
+                    <a asp-controller="Events" asp-action="Details" asp-route-id="@item.Id" class="btn btn-primary">
+                        Read More
+                    </a>
+                </div>
+            </div>
+        }
+
+        @if (!Model.Any(x => x.Type == "Future"))
+        {
+            <p class="text-muted text-start">No future events have been added yet.</p>
+        }
+    </div>
+</main>

@@ -1,0 +1,117 @@
+﻿@model List<Past2Future.Models.Feedback>
+@{
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+    ViewBag.Title = "Feedbacks";
+}
+
+<div class="bg-dark text-light p-4 rounded-4 border border-secondary">
+
+    <h2 class="mb-4">User Feedbacks</h2>
+
+    @if (Model == null || !Model.Any())
+    {
+        <div class="alert alert-secondary">
+            There is no feedback.
+        </div>
+    }
+    else
+    {
+        <div class="table-responsive">
+            <table class="table table-dark table-striped table-hover align-middle mb-0">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Username</th>
+                        <th>User Email</th>
+                        <th>Type</th>
+                        <th>Message</th>
+                        <th>Date</th>
+                        <th class="text-center">Delete</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var f in Model.OrderByDescending(x => x.CreatedAt))
+                    {
+                        <tr>
+                            <td>@f.Id</td>
+                            <td>@(f.User?.Username ?? "-")</td>
+                            <td>@(f.User?.Email ?? "-")</td>
+
+
+                            <td>
+                                <span class="badge
+                                        @(f.Type == "complaint" ? "bg-danger" :
+                                                                        f.Type == "suggestion" ? "bg-success" :
+                                                                        "bg-secondary")">
+                            @f.Type
+                        </span>
+                    </td>
+
+                            <td style="max-width:420px;">
+                                <div class="text-truncate"
+                                     style="max-width:420px;"
+                                     title="@f.Message">
+                                    @f.Message
+                                </div>
+
+                                <button class="btn btn-sm btn-outline-light mt-2"
+                                        data-bs-toggle="modal"
+                                        data-bs-target="#fbModal_@f.Id">
+                                    View
+                                </button>
+
+                                <!-- MODAL -->
+                                <div class="modal fade" id="fbModal_@f.Id" tabindex="-1">
+                                    <div class="modal-dialog modal-lg modal-dialog-scrollable">
+                                        <div class="modal-content bg-dark text-light border-secondary">
+                                            <div class="modal-header border-secondary">
+                                                <h5 class="modal-title">Feedback</h5>
+                                                <button type="button"
+                                                        class="btn-close btn-close-white"
+                                                        data-bs-dismiss="modal"></button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <p><b>Username:</b> @(f.User?.Username ?? "-")</p>
+                                                <p><b>User Email:</b> @(f.User?.Email ?? "-")</p>
+                                                <p><b>Type:</b> @f.Type</p>
+                                                <p><b>Date:</b> @f.CreatedAt.ToString("dd.MM.yyyy HH:mm")</p>
+                                                <hr class="border-secondary" />
+                                                <p style="white-space:pre-wrap;">
+                                                    @f.Message
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </td>
+
+                            <td>@f.CreatedAt.ToString("dd.MM.yyyy HH:mm")</td>
+
+                            <td class="text-center">
+                                <form asp-controller="Admin"
+                                      asp-action="DeleteFeedback"
+                                      method="post"
+                                      onsubmit="return confirm('Do you want to delete this feedback?');">
+                                    @Html.AntiForgeryToken()
+                                    <input type="hidden" name="id" value="@f.Id" />
+                                    <button type="submit"
+                                            class="btn btn-sm btn-outline-danger">
+                                        <i class="bi bi-trash"></i>
+                                    </button>
+                                </form>
+                            </td>
+                        </tr>
+                                }
+                </tbody>
+            </table>
+        </div>
+    }
+</div>
+
+<style>
+    .table-dark td,
+    .table-dark th {
+        border-color: #2b3036 !important;
+    }
+</style>
+

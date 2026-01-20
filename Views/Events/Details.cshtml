@@ -1,0 +1,149 @@
+﻿@model Past2Future.Models.EventDetailsViewModel
+@using Microsoft.AspNetCore.Http
+
+@{
+    ViewData["Title"] = (Model.Event.CountryRef?.Name ?? Model.Event.Country ?? "") + " | PAST2FUTURE";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    bool alreadyLiked = (ViewBag.AlreadyLiked as bool?) ?? false;
+}
+
+<main class="container py-5">
+    <div class="row">
+        <div class="col-lg-8">
+
+            @if (Model.Event.Type == "Future")
+            {
+                <span class="badge bg-success mb-2">FUTURE SCENARIO</span>
+            }
+            else
+            {
+                <span class="badge bg-warning text-dark mb-2">PAST EVENT</span>
+            }
+
+            <h1 style="color:#00BFFF;">@Model.Event.Title</h1>
+
+            <p class="text-secondary small">
+                Location: @(Model.Event.CountryRef?.Name ?? Model.Event.Country)
+                @if (Context.Session.GetString("IsAdmin") == "true")
+                {
+                    <a asp-action="Edit" asp-route-id="@Model.Event.Id" class="ms-3 text-warning">
+                        <i class="fas fa-edit"></i> (Edit)
+                    </a>
+                }
+            </p>
+
+            <img src="@(string.IsNullOrWhiteSpace(Model.Event.ImageUrl)
+                                              ? "https://images.unsplash.com/photo-1557683316-973673baf926?w=1200&h=800&fit=crop"
+                                              : Model.Event.ImageUrl)"
+                 class="img-fluid rounded shadow w-100"
+                 style="object-fit: cover; max-height: 500px;"
+                 alt="@Model.Event.Title"
+                 onerror="this.src='https://images.unsplash.com/photo-1557683316-973673baf926?w=1200&h=800&fit=crop';" />
+
+           
+            <p class="lead mt-4" style="color:#ccc;">
+                @Model.Event.Description
+            </p>
+
+            <hr style="border-color: #333;">
+
+            <h2 class="mt-4" style="color:#fff;">Global Impact</h2>
+            <p style="color:#aaa;">
+                This scenario demonstrates the critical turning points in @(Model.Event.CountryRef?.Name ?? Model.Event.Country)'s history and future.
+                Whether it is a lesson from the past or a hope for the future, understanding these events is key to shaping our world.
+            </p>
+
+
+        </div>
+
+        <div class="col-lg-4">
+            <form asp-controller="Events" asp-action="LikeEvent" method="post">
+                @Html.AntiForgeryToken()
+                <input type="hidden" name="eventId" value="@Model.Event.Id" />
+
+                <button type="submit"
+                        class="btn w-100"
+                        style="background-color:#00BFFF; color:#111;"
+                        @(alreadyLiked ? "disabled" : "")>
+                    Like
+                </button>
+            </form>
+
+            <div class="mt-2 text-center">
+                <small class="text-secondary">
+                    @Model.Event.LikeCount people liked this event.
+                </small>
+            </div>
+
+            @if (alreadyLiked)
+            {
+                <div class="mt-1 text-center">
+                    <small style="color:#00BFFF; opacity:0.7; font-style:italic;">
+                        you already liked this scenario
+                    </small>
+                </div>
+            }
+          
+
+            <div class="comments-section mt-4">
+                <h4 style="color:#fff; border-bottom: 2px solid #00BFFF; display:inline-block; padding-bottom:5px;">
+                    Traveler's Thoughts
+                </h4>
+
+                <div class="card mt-3 mb-4" style="background-color: #222; border: 1px solid #444;">
+                    <div class="card-body">
+                        <form asp-controller="Events" asp-action="AddComment" method="post">
+                            <input type="hidden" asp-for="NewComment.EventId" value="@Model.Event.Id" />
+                            <input type="hidden" asp-for="NewComment.CountryId" value="@(Model.Event.CountryRef?.Id ?? 0)" />
+
+                            <div class="mb-2">
+                                <label class="form-label text-white-50 small mb-1">
+                                    Title
+                                </label>
+                                <input asp-for="NewComment.title"
+                                       class="form-control form-control-sm bg-dark text-white border-secondary"
+                                       required />
+                            </div>
+
+                            <div class="mb-2">
+                                <label class="form-label text-white-50 small mb-1">
+                                    Your Thought
+                                </label>
+                                <textarea asp-for="NewComment.text"
+                                          class="form-control form-control-sm bg-dark text-white border-secondary"
+                                          rows="3"
+                                          required></textarea>
+                            </div>
+
+                            <div class="form-check mb-2">
+                                <input class="form-check-input" type="checkbox" asp-for="NewComment.isHistory">
+                                <label class="form-check-label text-white-50 small">
+                                    Is this a historical note?
+                                </label>
+                            </div>
+
+                            <button type="submit" class="btn btn-sm btn-info text-white w-100">Share Thought</button>
+                        </form>
+                    </div>
+                </div>
+
+                <div class="vstack gap-3">
+                    @if (Model.Comments != null && Model.Comments.Any())
+                    {
+                        @foreach (var comment in Model.Comments)
+                        {
+                            <partial name="TravelerThoughtCard" model="comment" />
+                        }
+                    }
+                    else
+                    {
+                        <div class="alert alert-dark text-center small text-muted">
+                            No thoughts yet. Be the first to share!
+                        </div>
+                    }
+                </div>
+
+            </div>
+        </div>
+    </div>
+</main>

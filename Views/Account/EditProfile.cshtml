@@ -1,0 +1,104 @@
+﻿@model Past2Future.Models.User
+
+<h2>Update Profile</h2>
+
+@if (TempData["Err"] != null)
+{
+    <div id="errAlert" class="alert alert-danger">
+        @TempData["Err"]
+    </div>
+}
+
+@if (TempData["Success"] != null)
+{
+    <div id="okAlert" class="alert alert-success">
+        @TempData["Success"]
+    </div>
+}
+
+<form asp-action="EditProfile" method="post">
+    @Html.AntiForgeryToken()
+
+    <!-- PROFILE INFORMATION -->
+    <fieldset class="border p-3 mb-4 rounded">
+        <legend class="w-auto px-2">Profile Information</legend>
+
+        <div class="mb-2">
+            <label>Email</label>
+            <input asp-for="Email" class="form-control" />
+        </div>
+
+        <div class="mb-2">
+            <label>Username</label>
+            <input asp-for="Username" class="form-control" />
+        </div>
+
+        <div class="mb-2">
+            <label>Phone</label>
+            <input asp-for="Phone" class="form-control" />
+        </div>
+
+        <div class="mb-2">
+            <label>First Name</label>
+            <input asp-for="Name" class="form-control" />
+        </div>
+
+        <div class="mb-2">
+            <label>Last Name</label>
+            <input asp-for="Surname" class="form-control" />
+        </div>
+
+        <div class="mb-2">
+            <label>Country</label>
+            <input asp-for="Country" class="form-control" />
+        </div>
+
+        <div class="mb-2">
+            <label>Gender</label>
+            <input asp-for="Gender" class="form-control" />
+        </div>
+
+        <div class="mb-2">
+            <label>Date of Birth</label>
+            <input asp-for="Birthdate" type="date" class="form-control" />
+        </div>
+        <div class="mb-2">
+            <label>New Password (optional)</label>
+            <input type="password" name="NewPassword" class="form-control"
+                   placeholder="Leave blank to keep your current password" />
+        </div>
+
+        <div class="mb-2">
+            <label>Confirm New Password</label>
+            <input type="password" name="ConfirmNewPassword" class="form-control"
+                   placeholder="Re-enter new password" />
+        </div>
+    </fieldset>
+
+    <!-- PASSWORD -->
+    <fieldset class="border p-3 rounded">
+        <legend class="w-auto px-2">Password</legend>
+
+        
+
+        <div class="mb-2">
+            <label>Current Password (required to update)</label>
+            <input type="password" name="CurrentPassword" class="form-control"
+                   placeholder="Enter your current password"
+                   required />
+        </div>
+    </fieldset>
+
+    <br />
+    <button type="submit" class="btn btn-primary">Update</button>
+</form>
+
+<script>
+    setTimeout(() => {
+      const err = document.getElementById("errAlert");
+      const ok = document.getElementById("okAlert");
+      if (err) err.style.display = "none";
+      if (ok) ok.style.display = "none";
+    }, 3000);
+</script>
+
