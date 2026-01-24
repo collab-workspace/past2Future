@@ -7,7 +7,7 @@ The application enables users to explore past and future events across different
 
 ---
 
-## ✨ Features
+##  Features
 
 - Interactive globe with country-based event visualization  
 - Past and future events listing  
@@ -18,7 +18,7 @@ The application enables users to explore past and future events across different
 
 ---
 
-## 🧰 Tech Stack
+## 🧰Tech Stack
 
 - **Backend:** ASP.NET Core MVC  
 - **Frontend:** Razor Views, JavaScript, Bootstrap  
@@ -28,13 +28,13 @@ The application enables users to explore past and future events across different
 
 ---
 
-## 📸 Screenshots
+## Screenshots
 
 Project screenshots are available in the `screenshots/` directory.
 
 ---
 
-## ⚙️ Setup & Installation
+##  Setup & Installation
 
 ### 1. Clone the repository
 ```bash
@@ -63,14 +63,14 @@ dotnet run
 
 ---
 
-## 👥 Contributors
+## Contributors
 
 * Emir Gençler
 * Doğa Savaş
 
 ---
 
-## 📝 License
+##  License
 
 MIT License - See [LICENSE](LICENSE) file for details
 
