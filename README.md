@@ -70,9 +70,11 @@ dotnet run
 
 ---
 
-## 📄 License
+## 📝 License
 
-This project is licensed under the MIT License.
+MIT License - See [LICENSE](LICENSE) file for details
+
+---
 
 
 
