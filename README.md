@@ -18,7 +18,7 @@ The application enables users to explore past and future events across different
 
 ---
 
-## 🧰Tech Stack
+## Tech Stack
 
 - **Backend:** ASP.NET Core MVC  
 - **Frontend:** Razor Views, JavaScript, Bootstrap  
