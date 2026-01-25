@@ -30,7 +30,17 @@ The application enables users to explore past and future events across different
 
 ## Screenshots
 
-Project screenshots are available in the `screenshots/` directory.
+<img width="1884" height="970" alt="home-globe" src="https://github.com/user-attachments/assets/a81bf989-19dc-4347-8f75-32675dd9fb84" />
+
+
+<img width="1885" height="992" alt="travelers-thoughts" src="https://github.com/user-attachments/assets/2c061286-af98-4dd4-802a-f3a185f99907" />
+
+
+<img width="1887" height="1008" alt="event-details" src="https://github.com/user-attachments/assets/9d81dc7f-bcd7-4646-bb0e-f8bfc35b71a7" />
+
+
+
+All project screenshots are available in the `screenshots/` directory.
 
 ---
 
